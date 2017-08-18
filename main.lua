@@ -8,6 +8,7 @@ fun:post("login",{username="root",password="root1"},422)
 print("Correct loggedIn")
 local suc, res = fun:post("login",{username="root",password="root"},200)
 local userId   = res.json().userId
+fun.loggedIn=true;
 print("try to login while logged in")
 fun:post("login",{username="root",password="root"},303,false) --we don't care if its json or not in this case
 print("Get own profile")
@@ -74,3 +75,8 @@ fun:post(
 	},
 	201
 )
+fun:colorPrint("green",[[
+!!!!!!!!!!!!!!!!!!
+IT PASSED THE TEST
+!!!!!!!!!!!!!!!!!!
+]])

@@ -2,11 +2,13 @@ local funcs = {}
 funcs.http      = require('requests')
 funcs.config    = require("config")
 funcs.cookies   = nil
+funcs.loggedIn  = false
 funcs.colors    = {
 	red     = "\27[31m",
 	green   = "\27[32m",
 	default = "\27[39m"
 }
+
 --this creates the whole url that will be used
 function funcs:constructURL(url)
 	return self.config.proto .. "://" .. self.config.host .. "/api/" .. url
@@ -52,10 +54,18 @@ function funcs:check(responce,expectedCode,isJson,check)
 	if isJson then
 		local jsonData,err = responce.json()
 		if err then
-			self:colorPrint("red","The responce was not a json format")
+			self:colorPrint("red","The response was not a json format")
 			print(responce.text)
 			error(err)
 			return false, responce,err
+		end
+		if not jsonData.userId then 
+			self:colorPrint("red","The response did not include a userId")
+			print(responce.text)
+			if self.loggedIn then
+				error("Missing userId while logged in")
+			end
+			return false,responce,err
 		end
 	end
 	if check then
