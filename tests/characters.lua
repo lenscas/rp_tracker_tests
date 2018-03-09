@@ -27,6 +27,14 @@ local chars = {
 		fun:get("rp"..rpCode.."characters/"..characterCode)
 		print("update our new character. Code=",characterCode)
 		fun:patch("rp"..rpCode.."characters/"..characterCode,{name="new test"},{code = 200})
+		--[[
+		print("get abilities in rp")
+		fun:generateGetTests{
+			urlParts = {"rp","rpCode","abilities"},
+			urlData  = {rpCode = "1234567"},
+			method   = fun:switch(fun.get)
+		}
+		--]]
 	end
 }
 return chars

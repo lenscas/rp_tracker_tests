@@ -32,7 +32,13 @@ local battle = {
 				fun:printColor("red", "Not enough characters")
 				error(response.text)
 			end
-		 end})
+		end})
+		print("get all available battle systems")
+		fun:get("system")
+		print("get all battles in an rp")
+		fun:get("rp/1234567/battles")
+		print("get all users in a battle from an rp that does not exist(pad server only)")
+		fun:get("rp/1234567/battles/"..id2.."/users",{code=422})
 	end
 }
 return battle

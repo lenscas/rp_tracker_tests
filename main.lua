@@ -1,3 +1,4 @@
+local args = {...}
 local conf = require("config")
 local fun  = require("functions")
 local db   = require("db")
@@ -7,13 +8,30 @@ fun.db = db
 local function getTestFile(name)
 	return {file = dofile("tests/" .. name .. ".lua"),name = name}
 end
-
-local tests = {
-	getTestFile("users"),
-	getTestFile("roleplays"),
-	getTestFile("characters"),
-	getTestFile("battle")
+local files = {
+	"users",
+	"roleplays",
+	"characters",
+	"battle",
+	"modifiers",
+	"actions"
 }
+
+local tests = {}
+local toRun = files
+if #args>0 then
+	toRun = args
+end
+local containsUserFile = false
+for key,value in ipairs(toRun) do
+	table.insert(tests,getTestFile(value))
+	if value =="users" then
+		containsUserFile = true
+	end
+end
+if not containsUserFile then
+	table.insert(tests,1,getTestFile("users"))
+end
 local structFile = "rp_tracker"
 local dataFile   = "rp_tracker_data"
 db:readWholeFile(structFile)

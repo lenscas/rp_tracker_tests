@@ -43,7 +43,7 @@ TRUNCATE TABLE `defaultActions`;
 --
 
 INSERT INTO `defaultActions` (`id`, `battleSystemId`, `name`, `code`, `description`) VALUES
-(1, 2, 'attack', 'local accUser = getTotalStats(user,\"ACC\")\nlocal evaTarget = getTotalStats(target,\"EVA\")\nlocal hasEvaded = rollAccCheck(accUser,evaTarget)\nif hasEvaded then\n    local atkUser   = getTotalStats(user,\"ATK\")\n    local defTarget = getTotalStats(target,\"DEF\")\n    local damage    = rollDamage(atkUser,defTarget)\n    local damageMod = createDamageMod(damage,target)\n    table.insert(battle.characters[target.code],damageMod)\nend\nreturn battle', 'A basic attack. This checks if an attack will land and calculates how much damage it will do.'),
+(1, 2, 'attack', 'battle:insertModifier({character=target,amount=-1,name="Damage",countDown=-1,type="HP"})', 'A basic attack. This checks if an attack will land and calculates how much damage it will do.'),
 (2, 2, 'Accuracy check', '', 'This calculates if a given action will land its target. This is used for example when a character attacks to see if his blow will land.');
 
 --
@@ -75,7 +75,7 @@ TRUNCATE TABLE `helper_functions`;
 --
 
 INSERT INTO `helper_functions` (`id`, `battleSystemId`, `name`, `params`, `code`) VALUES
-(1, 2, 'calcstats', 'character', '    print(character.code,\"is awesome\")\n    return character');
+(1, 2, 'getTotalStats', 'character', '    print(character.code,\"is awesome\")\n    return character');
 
 --
 -- Truncate table before insert `stats`
