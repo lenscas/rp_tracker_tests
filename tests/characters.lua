@@ -1,7 +1,7 @@
 
 local chars = {
 	function(fun,conf)
-		fun.db:quickExec("characters")
+		fun.db:quickExec{"roleplay","characters"}
 		print("Get all characters in an rp without characters.")
 		local rpCode = "/1234567/"
 		local suc, res= fun:get("rp"..rpCode.. "characters",{code = 404})
@@ -15,7 +15,6 @@ local chars = {
 				age			=	19,
 				backstory	=	"a testBackstory",
 				personality	=	"likes to break stuff"
-				
 			}
 		)
 		print("get all characters in an rp")

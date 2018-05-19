@@ -150,8 +150,8 @@ function funcs:generateGetTests(data)
 	data.checkData = data.checkData or {}
 	data.checkData.missing  = data.checkData.missing  or {code=422}
 	data.checkData.notFound = data.checkData.notFound or {code = 404}
-	data.checkData.correct  = data.checkData.correct  or {code = 200} 
-	
+	data.checkData.correct  = data.checkData.correct  or {code = 200}
+
 	data.urlData = data.urlData or {}
 	data.requiredData = data.requiredData or {}
 	local possibleUrls = {
@@ -160,8 +160,6 @@ function funcs:generateGetTests(data)
 			isCorrect = true
 		}
 	}
-	print("after safe set?")
-	for k,v in pairs(data.requiredData) do print(k,v) end
 	for ukey,urlPart in ipairs(data.urlParts) do
 		if not data.urlData[urlPart] then
 			for newKey,newUrl in pairs(possibleUrls) do
@@ -189,7 +187,7 @@ function funcs:generateGetTests(data)
 		end
 	end
 	local correctOne = nil
-	for key,value in pairs(possibleUrls) do 
+	for key,value in pairs(possibleUrls) do
 		local url = table.concat(value.url,"/")
 		if value.isCorrect then
 			if correctOne then
@@ -233,5 +231,22 @@ function funcs:generateGetTests(data)
 		return data.id,data,res
 	end
 	return res
+end
+function funcs:printTable(tbl, tabs)
+	tabs = tabs or 0
+	local printedSomething = false
+	for k,v in pairs(tbl) do
+		printedSomething = true
+		for i=0,tabs do
+			io.write"	"
+		end
+		print(k,v)
+		if type(v) =="table" then
+			self:printTable(v,tabs+1)
+		end
+	end
+	if not printedSomething then
+		print"(empty)"
+	end
 end
 return funcs

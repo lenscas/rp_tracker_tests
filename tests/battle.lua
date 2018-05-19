@@ -1,6 +1,6 @@
 local battle = {
 	function(fun,conf)
-		fun.db:quickExec({"characters","battle"})
+		fun.db:quickExec{"roleplay","characters","battle"}
 		print("get all battles in an RP that does not exist")
 		fun:get("rp/DOESNOTEXIST/battles",{code=404})
 		print("get all battles in an RP without battles")
@@ -23,7 +23,6 @@ local battle = {
 			}
 		})
 		local id2 = res.json().id
-		
 		print("get a battle without characters")
 		fun:get("rp/1234567/battles/"..id1)
 		print("get a battle with characters")

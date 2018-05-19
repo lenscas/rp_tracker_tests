@@ -1,6 +1,6 @@
 local mods = {
 	function(fun,conf)
-		fun.db:quickExec({"characters","battle"})
+		fun.db:quickExec{"roleplay","characters","battle"}
 		local simpleTestData = {
 			name      = "testMod",
 			value     =  4,

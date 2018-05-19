@@ -1,7 +1,9 @@
 local roleplays = {
 	function(fun,conf)
+		--fun.db:quickExec{"roleplay"}
 		print("If there are no RP's return 404")
 		fun:get("rp",{code = 404})
+		fun.db:quickExec{"roleplay"}
 		print("Make an RP")
 		local suc,res= fun:post(
 			"rp",
@@ -21,7 +23,7 @@ local roleplays = {
 		print("get the roleplay we just created")
 		fun:get("rp/"..rpCode)
 		print("look if we can join an existing RP")
-		fun:get("rp/".. rpCode.."/join")
+		fun:get("rp/1234567/join")
 		print("look if we can join a non-existing RP")
 		fun:get("rp/DOESNOTEXIST/join",{code=404})
 		print("get a config of an RP")
